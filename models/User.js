@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    userId: { type: Number, required: true, unique: true },
 });
 
 UserSchema.pre('save', async function(next) {
