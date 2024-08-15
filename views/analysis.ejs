@@ -1,0 +1,64 @@
+<%- include('partials/_header', { title: 'Analysis' }) %>
+    <h2>Analysis</h2>
+
+    <form id="filter-form" method="GET" action="/analysis">
+        <div class="form-group">
+            <label for="year">Year</label>
+            <select name="year" id="year" class="form-control">
+                <option value="">Select Year</option>
+                <% for (let i = new Date().getFullYear(); i >= 2000; i--) { %>
+                    <option value="<%= i %>" <%= year === String(i) ? 'selected' : '' %>><%= i %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="month">Month</label>
+            <select name="month" id="month" class="form-control">
+                <option value="">Select Month</option>
+                <% months.forEach((month, index) => { %>
+                    <option value="<%= index + 1 %>" <%= month === monthIndex ? 'selected' : '' %>><%= month %></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="remark">Remark</label>
+            <select name="remark" id="remark" class="form-control">
+                <option value="">Select Remark</option>
+                <% remarks.forEach(r => { %>
+                    <option value="<%= r %>" <%= remark === r ? 'selected' : '' %>><%= r %></option>
+                <% }); %>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <table id="analysis-table" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Remark</th>
+                <th>Amount</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% entries.forEach(entry => { %>
+                <tr>
+                    <td><%= new Date(entry.date).toLocaleDateString() %></td>
+                    <td><%= entry.remark %></td>
+                    <td><%= entry.amount %></td>
+                    <td><%= entry.type %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#analysis-table').DataTable();
+        });
+    </script>
+ 
+ <%- include('partials/_footer') %>

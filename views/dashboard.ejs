@@ -1,0 +1,54 @@
+<%- include('partials/_header', { title: 'Dashboard' }) %> 
+
+<div class="summary">
+    <h4>Monthly Summary</h4>
+    
+    <form method="GET" action="/dashboard">
+        <div class="form-group">
+            <label for="year">Year</label>
+            <select name="year" id="year" class="form-control">
+                <% years.forEach(year => { %>
+                    <option value="<%= year %>" <%= selectedYear === year ? 'selected' : '' %>><%= year %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="month">Month</label>
+            <select name="month" id="month" class="form-control">
+                <% months.forEach((month, index) => { %>
+                    <option value="<%= index + 1 %>" <%= selectedMonth === index + 1 ? 'selected' : '' %>><%= month %></option>
+                <% }) %>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Show Data</button>
+    </form>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Remark</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (monthlySummary.length > 0) { %>
+                <% monthlySummary.forEach(summary => { %>
+                    <tr>
+                        <td><%= summary.remark %></td>
+                        <td><%= summary.totalAmount %></td>
+                    </tr>
+                <% }) %>
+                <!-- Total Row -->
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong><%= totalAmount %></strong></td>
+                </tr>
+            <% } else { %>
+                <tr>
+                    <td colspan="2">No expenses found for this month.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div> 
+<%- include('partials/_footer') %>
