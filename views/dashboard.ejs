@@ -6,11 +6,12 @@
     <form method="GET" action="/dashboard">
         <div class="form-group">
             <label for="year">Year</label>
-            <select name="year" id="year" class="form-control">
+           <select name="year" id="year" class="form-control">
                 <% years.forEach(year => { %>
-                    <option value="<%= year %>" <%= selectedYear === year ? 'selected' : '' %>><%= year %></option>
+                    <option value="<%= year %>" <%= year == selectedYear ? 'selected' : '' %>><%= year %></option>
                 <% }) %>
             </select>
+            
         </div>
         <div class="form-group">
             <label for="month">Month</label>
